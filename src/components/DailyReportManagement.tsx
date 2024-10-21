@@ -69,7 +69,7 @@ const styles = StyleSheet.create({
 // PDF Document component
 const MyDocument: React.FC<{ patients: (Patient | Consultation)[], appointments: Appointment[], selectedDate: string, selectedSpecialty: string }> = ({ patients, appointments, selectedDate, selectedSpecialty }) => (
   <Document>
-    <Page size="A4" style={styles.page}>
+    <Page size="A3" style={styles.page}>
       <Text style={styles.title}>Daily Patient Report</Text>
       <Text style={styles.subtitle}>Date: {selectedDate}</Text>
       {selectedSpecialty && <Text style={styles.subtitle}>Specialty: {selectedSpecialty}</Text>}
@@ -101,7 +101,7 @@ const MyDocument: React.FC<{ patients: (Patient | Consultation)[], appointments:
           <View style={styles.tableCol}><Text style={styles.tableCell}>Medical Number</Text></View>
           <View style={styles.tableCol}><Text style={styles.tableCell}>Specialty</Text></View>
           <View style={styles.tableCol}><Text style={styles.tableCell}>Type</Text></View>
-          <View style={styles.tableCol}><Text style={styles.tableCell}>Created At</Text></View>
+
         </View>
         {appointments.map((appointment) => (
           <View style={styles.tableRow} key={appointment.appointment_id}>
@@ -109,7 +109,7 @@ const MyDocument: React.FC<{ patients: (Patient | Consultation)[], appointments:
             <View style={styles.tableCol}><Text style={styles.tableCell}>{appointment.patient_medical_number}</Text></View>
             <View style={styles.tableCol}><Text style={styles.tableCell}>{appointment.clinic_specialty}</Text></View>
             <View style={styles.tableCol}><Text style={styles.tableCell}>{appointment.appointment_type}</Text></View>
-            <View style={styles.tableCol}><Text style={styles.tableCell}>{new Date(appointment.created_at).toLocaleString()}</Text></View>
+
           </View>
         ))}
       </View>
