@@ -75,7 +75,7 @@ const NewPatientAdmission: React.FC = () => {
     if (formType === 'consultation') {
       setConsultationData(prevData => ({
         ...prevData,
-        mrn: `C-${prevData.mrn}`
+        mrn: prevData.mrn.startsWith('C-') ? prevData.mrn : `C-${prevData.mrn}`
       }));
     }
   }, [formType]);
@@ -115,7 +115,9 @@ const NewPatientAdmission: React.FC = () => {
           .from('consultations')
           .insert([{
             ...consultationData,
+            status: 'Active',
             created_at: new Date().toISOString(),
+            updated_at: new Date().toISOString()
           }])
           .select();
 
@@ -124,8 +126,8 @@ const NewPatientAdmission: React.FC = () => {
       }
       navigate('/dashboard');
     } catch (error) {
-      toast.error(formType === 'admission' ? 'Failed to admit patient' : 'Failed to submit consultation request');
       console.error('Error:', error);
+      toast.error(formType === 'admission' ? 'Failed to admit patient' : 'Failed to submit consultation request');
     }
   };
 
@@ -152,6 +154,7 @@ const NewPatientAdmission: React.FC = () => {
           <div className="space-y-8 divide-y divide-gray-200">
             <div>
               <div className="mt-6 grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
+                {/* MRN Field */}
                 <div className="sm:col-span-3">
                   <label htmlFor="mrn" className="block text-sm font-medium text-gray-700">
                     MRN
@@ -173,6 +176,7 @@ const NewPatientAdmission: React.FC = () => {
                   </div>
                 </div>
 
+                {/* Patient Name Field */}
                 <div className="sm:col-span-3">
                   <label htmlFor="patient_name" className="block text-sm font-medium text-gray-700">
                     Patient Name
@@ -194,6 +198,7 @@ const NewPatientAdmission: React.FC = () => {
                   </div>
                 </div>
 
+                {/* Age Field */}
                 <div className="sm:col-span-3">
                   <label htmlFor="age" className="block text-sm font-medium text-gray-700">
                     Age
@@ -213,6 +218,7 @@ const NewPatientAdmission: React.FC = () => {
                   </div>
                 </div>
 
+                {/* Gender Field */}
                 <div className="sm:col-span-3">
                   <label htmlFor="gender" className="block text-sm font-medium text-gray-700">
                     Gender
@@ -238,6 +244,7 @@ const NewPatientAdmission: React.FC = () => {
 
                 {formType === 'admission' && (
                   <>
+                    {/* Admission Date Field */}
                     <div className="sm:col-span-3">
                       <label htmlFor="admission_date" className="block text-sm font-medium text-gray-700">
                         Admission Date
@@ -258,6 +265,7 @@ const NewPatientAdmission: React.FC = () => {
                       </div>
                     </div>
 
+                    {/* Admission Time Field */}
                     <div className="sm:col-span-3">
                       <label htmlFor="admission_time" className="block text-sm font-medium text-gray-700">
                         Admission Time
@@ -278,6 +286,7 @@ const NewPatientAdmission: React.FC = () => {
                       </div>
                     </div>
 
+                    {/* Weekend Shift Checkbox */}
                     <div className="sm:col-span-3">
                       <label htmlFor="is_weekend_shift" className="flex items-center">
                         <input
@@ -292,6 +301,7 @@ const NewPatientAdmission: React.FC = () => {
                       </label>
                     </div>
 
+                    {/* Shift Type Field */}
                     <div className="sm:col-span-3">
                       <label htmlFor="shift_type" className="block text-sm font-medium text-gray-700">
                         Shift Type
@@ -319,6 +329,7 @@ const NewPatientAdmission: React.FC = () => {
                       </select>
                     </div>
 
+                    {/* Assigned Doctor Field */}
                     <div className="sm:col-span-3">
                       <label htmlFor="assigned_doctor" className="block text-sm font-medium text-gray-700">
                         Assigned Doctor
@@ -340,6 +351,7 @@ const NewPatientAdmission: React.FC = () => {
                       </div>
                     </div>
 
+                    {/* Specialty Field */}
                     <div className="sm:col-span-3">
                       <label htmlFor="specialty" className="block text-sm font-medium text-gray-700">
                         Specialty
@@ -364,6 +376,7 @@ const NewPatientAdmission: React.FC = () => {
                       </div>
                     </div>
 
+                    {/* Diagnosis Field */}
                     <div className="sm:col-span-6">
                       <label htmlFor="diagnosis" className="block text-sm font-medium text-gray-700">
                         Diagnosis
@@ -389,6 +402,7 @@ const NewPatientAdmission: React.FC = () => {
 
                 {formType === 'consultation' && (
                   <>
+                    {/* Requesting Department Field */}
                     <div className="sm:col-span-3">
                       <label htmlFor="requesting_department" className="block text-sm font-medium text-gray-700">
                         Requesting Department
@@ -410,6 +424,7 @@ const NewPatientAdmission: React.FC = () => {
                       </div>
                     </div>
 
+                    {/* Patient Location Field */}
                     <div className="sm:col-span-3">
                       <label htmlFor="patient_location" className="block text-sm font-medium text-gray-700">
                         Patient Location
@@ -431,6 +446,7 @@ const NewPatientAdmission: React.FC = () => {
                       </div>
                     </div>
 
+                    {/* Consultation Specialty Field */}
                     <div className="sm:col-span-3">
                       <label htmlFor="consultation_specialty" className="block text-sm font-medium text-gray-700">
                         Consultation Specialty
